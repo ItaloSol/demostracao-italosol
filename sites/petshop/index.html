@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PetViva Clínica Veterinária e Pet Shop</title>
+<meta name="description" content="PetViva: clínica veterinária, banho e tosa e pet shop em Brasília. Veja serviços, produtos e agende pelo WhatsApp (61) 9 9931-5616.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: cabeçalho fixo com as duas áreas sempre à vista; cada área é uma "página" trocada pelo hash.
+   Azul = marca e clínica · Verde = ação (WhatsApp/agendar) · Branco = respiro · Areia = calor dos pets. */
+:root{
+  color-scheme: light;
+  --navy:#0b2550;
+  --blue:#0f56b3;
+  --blue-soft:#e4effc;
+  --blue-mist:#f3f8fe;
+  --green:#0e7f43;
+  --green-deep:#0a6435;
+  --green-soft:#e2f5ea;
+  --sand:#e9b572;
+  --sand-deep:#c98a4b;
+  --ink:#12233f;
+  --muted:#4d5d78;
+  --line:#d6e1f0;
+  --white:#ffffff;
+  --display:"Bricolage Grotesque","Trebuchet MS","Segoe UI",sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
+  --wrap:1120px;
+  --shadow:0 10px 30px -14px rgba(11,37,80,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--white);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;padding-bottom:76px}
+img,svg{max-width:100%}
+a{color:var(--blue)}
+h1,h2,h3{font-family:var(--display);color:var(--navy);margin:0;text-wrap:balance;line-height:1.08;letter-spacing:-.015em}
+h1{font-size:clamp(2.1rem,5.2vw,3.6rem);font-weight:800}
+h2{font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:700;line-height:1.2;letter-spacing:0}
+p{margin:0}
+.wrap{width:min(100% - 36px,var(--wrap));margin-inline:auto}
+.lead{font-size:1.14rem;color:var(--muted);max-width:52ch}
+.sub{color:var(--muted);max-width:62ch;margin-top:10px}
+.ico{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ico.fill{fill:currentColor;stroke:none}
+:focus-visible{outline:3px solid #f5a524;outline-offset:3px;border-radius:6px}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+
+/* Botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 22px;border-radius:999px;font:700 1rem var(--body);text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .15s ease,background-color .15s ease,box-shadow .15s ease}
+.btn:active{transform:translateY(1px)}
+.btn-wa{background:var(--green);color:#fff;box-shadow:0 8px 20px -10px rgba(14,127,67,.8)}
+.btn-wa:hover{background:var(--green-deep)}
+.btn-line{background:#fff;color:var(--blue);border-color:var(--line)}
+.btn-line:hover{border-color:var(--blue)}
+.btn-sm{min-height:42px;padding:0 16px;font-size:.93rem}
+.textlink{display:inline-flex;align-items:center;gap:6px;font-weight:700;text-decoration:none;color:var(--blue)}
+.textlink:hover{text-decoration:underline}
+.textlink .ico{width:18px;height:18px}
+
+/* Cabeçalho */
+.top{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-row{display:flex;align-items:center;gap:20px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.brand svg{width:40px;height:40px}
+.brand b{font:800 1.4rem/1 var(--display);color:var(--navy);letter-spacing:-.02em}
+.brand b i{font-style:normal;color:var(--green)}
+.brand small{display:block;font:600 .68rem/1.2 var(--body);color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-top:3px}
+.nav{display:flex;gap:4px}
+.nav a{padding:10px 14px;border-radius:999px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav a:hover{background:var(--blue-mist)}
+.nav a[aria-current="page"]{background:var(--blue-soft);color:var(--blue)}
+.top .btn-wa .long{display:inline}
+@media (max-width:900px){
+  .top-row{flex-wrap:wrap;gap:0 12px;min-height:60px;padding-top:6px}
+  .nav{order:3;width:100%;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{padding:8px 13px;font-size:.95rem}
+  .brand small{display:none}
+  .top .btn-wa{min-height:42px;padding:0 14px;font-size:.92rem}
+  .top .btn-wa .long{display:none}
+}
+
+/* Hero inicial */
+.hero{background:linear-gradient(180deg,var(--blue-mist),#fff 88%)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding:48px 0 34px}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero .lead{margin-top:18px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin:26px 0 0;padding:0;list-style:none;color:var(--muted);font-size:.96rem}
+.facts li{display:flex;align-items:center;gap:8px}
+.facts .ico{color:var(--blue);width:19px;height:19px}
+.hero-art{position:relative}
+.hero-art svg{display:block;width:100%;height:auto}
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr;padding:28px 0 22px;gap:18px}
+  .hero-art{max-width:360px;margin-inline:auto;width:100%}
+}
+
+/* Três atalhos: serviços, produtos, agendamento */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-bottom:44px}
+.trio a{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .15s ease,transform .15s ease}
+.trio a:hover{border-color:var(--blue);transform:translateY(-2px)}
+.trio .dot{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--blue-soft);color:var(--blue);flex:none}
+.trio a.go .dot{background:var(--green-soft);color:var(--green)}
+.trio b{display:block;font:700 1.06rem/1.2 var(--display);color:var(--navy)}
+.trio span span{font-size:.92rem;color:var(--muted)}
+@media (max-width:760px){.trio{grid-template-columns:1fr;gap:10px;padding-bottom:32px}}
+
+section.block{padding:64px 0}
+section.tint{background:var(--blue-mist)}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:14px 30px;margin-bottom:30px}
+@media (max-width:760px){section.block{padding:44px 0}.head{margin-bottom:22px}}
+
+/* Duas áreas */
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.area{position:relative;display:grid;grid-template-columns:1fr 150px;gap:10px;border-radius:var(--r-lg);padding:28px 28px 24px;overflow:hidden;min-height:330px}
+.area.bath{background:var(--blue-soft)}
+.area.clinic{background:var(--navy);color:#dfe9f8}
+.area.clinic h3,.area.clinic .price b{color:#fff}
+.area h3{font-size:1.7rem}
+.area p{margin-top:8px;max-width:34ch}
+.area ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:9px}
+.area li{display:flex;align-items:center;gap:10px;font-weight:600}
+.area li .ico{width:20px;height:20px;color:var(--blue)}
+.area.clinic li .ico{color:#7fd6a4}
+.area li a{color:inherit;text-decoration:none;border-bottom:1px dashed currentColor}
+.area .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;grid-column:1/-1;align-self:end}
+.area.clinic .btn-line{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+.area.clinic .btn-line:hover{border-color:#fff}
+.area-art{align-self:start;justify-self:end;width:150px}
+@media (max-width:860px){.areas{grid-template-columns:1fr}.area{min-height:0}}
+@media (max-width:460px){.area{grid-template-columns:1fr 96px;padding:22px 20px}.area-art{width:96px}.area h3{font-size:1.45rem}}
+
+/* Produtos */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:600 .95rem var(--body);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.goods{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px}
+.good{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.good .pic{aspect-ratio:4/3;background:var(--blue-mist);display:grid;place-items:center}
+.good .pic svg{width:58%;height:auto}
+.good .info{display:flex;flex-direction:column;gap:6px;padding:14px 14px 16px;flex:1}
+.good .cat{font-size:.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.good h3{font:600 1rem/1.3 var(--body);color:var(--ink)}
+.good .price{font:800 1.28rem/1 var(--display);color:var(--navy);margin-top:auto;padding-top:8px;font-variant-numeric:tabular-nums}
+.good .btn{margin-top:10px;width:100%}
+@media (max-width:980px){.goods{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:700px){.goods{grid-template-columns:repeat(2,1fr);gap:10px}.good .info{padding:12px}.good .btn{padding:0 8px;font-size:.86rem}}
+.note{font-size:.88rem;color:var(--muted);margin-top:16px}
+
+/* Agendamento */
+.book{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:start}
+.form{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:grid;gap:18px}
+.field{display:grid;gap:7px}
+.field label,.field legend{font-weight:700;font-size:.95rem;color:var(--navy);padding:0}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+select,input[type=text]{width:100%;min-height:50px;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:0 14px;font:500 1rem var(--body);color:var(--ink);background:#fff}
+select:focus,input[type=text]:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px var(--blue-soft)}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{position:relative;font-weight:600;color:var(--ink)}
+.seg input{position:absolute;opacity:0;inset:0}
+.seg span{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;border:1.5px solid var(--line);border-radius:999px;cursor:pointer}
+.seg input:checked + span{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
+.seg input:focus-visible + span{outline:3px solid #f5a524;outline-offset:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.phone{background:#e9efe6;border-radius:var(--r-lg);padding:18px;border:1px solid #d5dfd0}
+.phone-top{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid #d5dfd0;font-weight:700;color:var(--navy)}
+.phone-top svg{width:36px;height:36px}
+.phone-top small{display:block;font-weight:500;color:var(--muted);font-size:.82rem}
+.bubble{margin:16px 0 14px auto;max-width:92%;background:#d6f5c8;border-radius:16px 16px 4px 16px;padding:12px 14px;font-size:.98rem;white-space:pre-line;color:#14301c;overflow-wrap:anywhere}
+.phone .btn{width:100%}
+.phone .note{text-align:center;margin-top:12px}
+@media (max-width:860px){.book{grid-template-columns:1fr}.form{padding:20px}}
+@media (max-width:420px){.two{grid-template-columns:1fr}}
+
+/* Passos */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:#fff}
+.steps li{list-style:none;padding:24px 22px;border-left:1px solid var(--line);counter-increment:s}
+.steps li:first-child{border-left:0}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font:700 1rem var(--display);margin-bottom:14px}
+.steps p{color:var(--muted);font-size:.96rem;margin-top:6px}
+ol.steps{margin:0;padding:0}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.steps li:nth-child(3){border-left:0}.steps li:nth-child(n+3){border-top:1px solid var(--line)}}
+@media (max-width:480px){.steps{grid-template-columns:1fr}.steps li{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:34px 1fr;column-gap:14px}.steps li:first-child{border-top:0}.steps li::before{grid-row:1/3;margin:0}.steps li>*{grid-column:2}}
+
+/* Contato */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+.visit dl{margin:22px 0 0;display:grid;gap:16px}
+.visit dt{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--navy)}
+.visit dt .ico{color:var(--blue)}
+.visit dd{margin:4px 0 0 30px;color:var(--muted)}
+.hours{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.hours td{padding:3px 0}.hours td:last-child{text-align:right;color:var(--ink);font-weight:600}
+.map{border-radius:var(--r-lg);background:var(--blue-soft);min-height:300px;position:relative;overflow:hidden}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map .pin{position:absolute;left:50%;top:46%;transform:translate(-50%,-100%);background:var(--navy);color:#fff;padding:10px 14px;border-radius:14px;font-weight:700;font-size:.92rem;white-space:nowrap;box-shadow:var(--shadow)}
+.map .pin::after{content:"";position:absolute;left:50%;bottom:-7px;width:14px;height:14px;background:var(--navy);transform:translateX(-50%) rotate(45deg);border-radius:2px}
+@media (max-width:860px){.visit{grid-template-columns:1fr}.map{min-height:220px}}
+
+/* FAQ */
+.faq{display:grid;gap:10px;max-width:780px}
+.faq details{border:1px solid var(--line);border-radius:var(--r-md);background:#fff}
+.faq summary{cursor:pointer;list-style:none;padding:18px 52px 18px 20px;font-weight:700;color:var(--navy);position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:22px;top:50%;width:10px;height:10px;border-right:2.5px solid var(--blue);border-bottom:2.5px solid var(--blue);transform:translateY(-70%) rotate(45deg);transition:transform .2s ease}
+.faq details[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+.faq details p{padding:0 20px 18px;color:var(--muted);max-width:66ch}
+
+/* Páginas de área */
+.sub-hero{padding:40px 0 48px}
+.sub-hero.bath{background:var(--blue-soft)}
+.sub-hero.clinic{background:var(--navy)}
+.sub-hero.clinic h1{color:#fff}.sub-hero.clinic .lead{color:#c9d8ef}
+.sub-hero.clinic .facts{color:#c9d8ef}.sub-hero.clinic .facts .ico{color:#7fd6a4}
+.sub-hero.clinic .btn-line{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.sub-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+.crumb{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;text-decoration:none;color:var(--blue);margin-bottom:16px}
+.sub-hero.clinic .crumb{color:#9fc4f5}
+.crumb .ico{width:16px;height:16px;transform:rotate(180deg)}
+.sub-art svg{display:block;width:100%;max-width:380px;margin-inline:auto;height:auto}
+@media (max-width:860px){.sub-grid{grid-template-columns:1fr}.sub-art{order:-1}.sub-art svg{max-height:190px}.sub-hero{padding:24px 0 34px}}
+
+.included{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:0;padding:0}
+.included li{list-style:none;background:var(--blue-mist);border-radius:var(--r-md);padding:20px 16px}
+.included .ico{width:28px;height:28px;color:var(--blue);margin-bottom:12px}
+.included p{font-size:.93rem;color:var(--muted);margin-top:4px}
+@media (max-width:900px){.included{grid-template-columns:repeat(2,1fr)}.included li:last-child{grid-column:1/-1}}
+
+.table-box{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-lg);background:#fff}
+table.prices{width:100%;border-collapse:collapse;min-width:560px;font-variant-numeric:tabular-nums}
+.prices th,.prices td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line)}
+.prices thead th{font:700 .82rem var(--body);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--blue-mist)}
+.prices tbody tr:last-child td,.prices tbody tr:last-child th{border-bottom:0}
+.prices tbody th{font-weight:700;color:var(--navy)}
+.prices tbody th small{display:block;font-weight:500;color:var(--muted)}
+.prices td b{font:700 1.1rem var(--display);color:var(--navy)}
+.prices td:last-child{text-align:right}
+
+.extras{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.extra{border:1px solid var(--line);border-radius:var(--r-md);padding:22px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.extra p{color:var(--muted);font-size:.96rem}
+.extra .from{font-weight:700;color:var(--navy);margin-top:auto;padding-top:10px}
+@media (max-width:860px){.extras{grid-template-columns:1fr}}
+
+.urgent{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;justify-content:space-between;border:2px solid #f1c9c4;background:#fff6f5;border-radius:var(--r-md);padding:18px 22px;margin-top:-28px;position:relative}
+.urgent strong{display:flex;align-items:center;gap:8px;color:#a3261b;font:700 1.1rem var(--display)}
+.urgent p{color:#5b2a25;font-size:.97rem;max-width:56ch}
+.urgent .btn{background:#b3261e;color:#fff}
+
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.svc article{border:1px solid var(--line);border-radius:var(--r-md);padding:22px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.svc .ico{width:30px;height:30px;color:var(--green)}
+.svc p{color:var(--muted);font-size:.96rem}
+.svc .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:14px}
+.svc .foot span{font-weight:700;color:var(--navy);font-size:.95rem}
+@media (max-width:900px){.svc{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.svc{grid-template-columns:1fr}}
+
+.vax{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.vax article{background:#fff;border-radius:var(--r-lg);padding:26px;border:1px solid var(--line)}
+.vax h3{display:flex;align-items:center;gap:12px;font-size:1.3rem}
+.vax h3 svg{width:44px;height:44px}
+.vax ol{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:0}
+.vax li{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+.vax li b{color:var(--blue);font-variant-numeric:tabular-nums}
+.vax li span{color:var(--muted)}
+@media (max-width:860px){.vax{grid-template-columns:1fr}}
+@media (max-width:420px){.vax li{grid-template-columns:1fr;gap:2px}}
+
+.closing{background:var(--green);border-radius:var(--r-lg);padding:36px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;color:#e6f7ec}
+.closing h2{color:#fff}
+.closing p{margin-top:8px}
+.closing .btn{background:#fff;color:var(--green-deep)}
+@media (max-width:560px){.closing{padding:26px 22px}}
+
+/* Rodapé e barra fixa */
+footer{background:var(--navy);color:#c5d4ec;padding:44px 0 28px;font-size:.95rem}
+footer .cols{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:28px}
+footer h3{color:#fff;font-size:1rem;margin-bottom:10px}
+footer a{color:#fff;text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+footer .brand b{color:#fff}footer .brand b i{color:#7fd6a4}
+footer .legal{border-top:1px solid rgba(255,255,255,.14);margin-top:30px;padding-top:18px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:.86rem;color:#9fb3d3}
+@media (max-width:760px){footer .cols{grid-template-columns:1fr}}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#fff;border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;align-items:center;justify-content:center;box-shadow:0 -8px 24px -18px rgba(11,37,80,.5)}
+.dock p{font-size:.93rem;color:var(--muted)}
+.dock p b{color:var(--navy);display:block;font-size:1rem}
+.dock .btn{min-height:48px}
+@media (max-width:640px){.dock p{display:none}.dock .btn{flex:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- Ícones e ilustrações reutilizados -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zM8.4 7.3c.2-.5.5-.5.8-.5h.6c.2 0 .5.1.6.5l.8 1.9c.1.3.1.5-.1.8l-.6.8c.7 1.3 1.7 2.3 3.1 3l.9-.9c.2-.2.5-.3.8-.2l1.8.9c.4.2.5.4.5.7 0 1-.9 1.9-1.9 2-3.9.3-8.2-4-8.200-7.9 0-.4.1-.8.3-1.1z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.500 4.500L19 7.500"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.500 2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.500" width="10" height="19" rx="2.500"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-cross" viewBox="0 0 24 24"><rect x="3.500" y="3.500" width="17" height="17" rx="5"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.500 2.800v5.700c0 4.500-3.100 7.800-7.500 9.500-4.400-1.700-7.500-5-7.500-9.500V5.800z"/><path d="M8.800 12.200l2.300 2.300 4.200-4.500"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9.500 3h5M10.500 3v6.200L5 18.500A1.700 1.700 0 0 0 6.500 21h11a1.700 1.700 0 0 0 1.500-2.500l-5.500-9.300V3"/><path d="M8 15h8"/></symbol>
+    <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6.500" cy="6.500" r="2.800"/><circle cx="6.500" cy="17.500" r="2.800"/><path d="M8.800 8.300L20 18M8.800 15.700L20 6"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.500s6.500 6.700 6.500 11a6.500 6.500 0 0 1-13 0c0-4.300 6.500-11 6.500-11z"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 9h10.500a2.700 2.700 0 1 0-2.700-2.700M3 14h15a2.700 2.700 0 1 1-2.700 2.700M3 19h6"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="7" rx="2.500"/><path d="M7 11v3M10.300 11v4M13.700 11v4M17 11v3M12 15.500V21"/></symbol>
+    <symbol id="i-ear" viewBox="0 0 24 24"><path d="M7 10a5.500 5.500 0 0 1 11 0c0 3.500-3 3.800-3 6.800A3.200 3.200 0 0 1 9 18"/><path d="M10 10a2.500 2.500 0 0 1 5 0c0 1.500-1.800 1.800-1.800 3.500"/></symbol>
+    <symbol id="i-paw" viewBox="0 0 24 24"><ellipse cx="6" cy="10" rx="2" ry="2.700"/><ellipse cx="10" cy="6" rx="2" ry="2.700"/><ellipse cx="14.500" cy="6" rx="2" ry="2.700"/><ellipse cx="18.500" cy="10" rx="2" ry="2.700"/><path d="M12.200 11.500c-3 0-5.700 3.300-5.700 5.800 0 1.700 1.300 2.700 2.800 2.700 1.200 0 1.900-.6 2.900-.6s1.700.6 2.900.6c1.500 0 2.800-1 2.800-2.700 0-2.500-2.700-5.800-5.700-5.800z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12.500H6z"/><path d="M9 8V6.500a3 3 0 0 1 6 0V8"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 15.500H3z"/><path d="M12 10v4.500M12 17.200v.1"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></symbol>
+
+    <symbol id="logo" viewBox="0 0 48 48">
+      <rect width="48" height="48" rx="14" fill="#0f56b3"/>
+      <g fill="#fff"><ellipse cx="14" cy="21" rx="3.300" ry="4.300"/><ellipse cx="20.500" cy="14.500" rx="3.300" ry="4.300"/><ellipse cx="28" cy="14.500" rx="3.300" ry="4.300"/><ellipse cx="34.500" cy="21" rx="3.300" ry="4.300"/></g>
+      <path fill="#7fe0a8" d="M24.200 37.500c-.4 0-.8-.2-1.100-.4-3.600-2.600-7.600-5.400-7.600-9.200 0-2.600 2-4.400 4.300-4.400 1.700 0 3.300.9 4.400 2.400 1.100-1.500 2.700-2.400 4.400-2.400 2.300 0 4.300 1.800 4.300 4.400 0 3.800-4 6.600-7.600 9.200-.3.200-.7.400-1.100.4z"/>
+    </symbol>
+
+    <!-- Cão: cabeça 200x200 -->
+    <symbol id="dog" viewBox="0 0 200 200">
+      <path fill="#c98a4b" d="M38 62c-18 4-26 34-20 66 3 16 14 22 24 16 12-8 14-40 16-66 1-12-8-19-20-16zM162 62c18 4 26 34 20 66-3 16-14 22-24 16-12-8-14-40-16-66-1-12 8-19 20-16z"/>
+      <path fill="#e9b572" d="M100 30c38 0 60 26 60 64 0 44-24 80-60 80s-60-36-60-80c0-38 22-64 60-64z"/>
+      <path fill="#fff4e3" d="M100 96c20 0 34 16 34 38s-14 40-34 40-34-18-34-40 14-38 34-38z"/>
+      <ellipse cx="76" cy="88" rx="8" ry="9" fill="#0b2550"/><ellipse cx="124" cy="88" rx="8" ry="9" fill="#0b2550"/>
+      <circle cx="79" cy="85" r="2.600" fill="#fff"/><circle cx="127" cy="85" r="2.600" fill="#fff"/>
+      <path fill="#0b2550" d="M86 112c0-6 6-9 14-9s14 3 14 9c0 7-7 12-14 12s-14-5-14-12z"/>
+      <path fill="none" stroke="#0b2550" stroke-width="3.500" stroke-linecap="round" d="M100 124v8M100 132c-5 8-14 9-20 4M100 132c5 8 14 9 20 4"/>
+      <path fill="#f08f8f" d="M90 139c6 3 14 3 20 0v10c0 6-4 10-10 10s-10-4-10-10z"/>
+    </symbol>
+    <!-- Gato: cabeça 200x200 -->
+    <symbol id="cat" viewBox="0 0 200 200">
+      <path fill="#8a9fbc" d="M36 28l44 34-40 36zM164 28l-44 34 40 36z"/>
+      <path fill="#f3b3b3" d="M48 46l22 18-20 16zM152 46l-22 18 20 16z"/>
+      <path fill="#a9bbd4" d="M100 46c40 0 66 24 66 62s-28 64-66 64-66-26-66-64 26-62 66-62z"/>
+      <path fill="#8a9fbc" d="M92 48h16l-3 26h-10zM68 54l12-4 3 20-8 2zM132 54l-12-4-3 20 8 2z"/>
+      <path fill="#fff" d="M100 116c16 0 28 10 28 26s-12 30-28 30-28-14-28-30 12-26 28-26z"/>
+      <ellipse cx="74" cy="104" rx="10" ry="11" fill="#7fd6a4"/><ellipse cx="126" cy="104" rx="10" ry="11" fill="#7fd6a4"/>
+      <ellipse cx="74" cy="104" rx="4" ry="9" fill="#0b2550"/><ellipse cx="126" cy="104" rx="4" ry="9" fill="#0b2550"/>
+      <path fill="#f08f8f" d="M93 124h14l-7 8z"/>
+      <path fill="none" stroke="#0b2550" stroke-width="3" stroke-linecap="round" d="M100 132v6M100 138c-4 6-10 6-14 2M100 138c4 6 10 6 14 2M58 128l-26-6M58 136l-26 4M142 128l26-6M142 136l26 4"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#inicio" aria-label="PetViva, página inicial">
+      <svg aria-hidden="true"><use href="#logo"/></svg>
+      <span><b>Pet<i>Viva</i></b><small>Clínica Veterinária &amp; Pet Shop</small></span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#inicio" data-nav="inicio">Início</a>
+      <a href="#banho-e-tosa" data-nav="banho-e-tosa">Banho &amp; Tosa</a>
+      <a href="#clinica-veterinaria" data-nav="clinica-veterinaria">Clínica Veterinária</a>
+      <a href="#inicio" data-view="inicio" data-scroll="produtos">Produtos</a>
+    </nav>
+    <a class="btn btn-wa" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar um horário." target="_blank" rel="noopener">
+      <svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg><span>Agendar<span class="long"> pelo WhatsApp</span></span>
+    </a>
+  </div>
+</header>
+
+<main>
+<!-- ============ INÍCIO ============ -->
+<div data-page="inicio">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Saúde, banho e tudo o que o seu pet precisa <em>em um só lugar.</em></h1>
+        <p class="lead">Clínica veterinária, banho e tosa e pet shop em Águas Claras. Você escolhe o serviço e marca o horário pelo WhatsApp em menos de um minuto.</p>
+        <div class="cta-row">
+          <a class="btn btn-wa" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar um horário." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Agendar pelo WhatsApp</a>
+          <a class="btn btn-line" href="#inicio" data-scroll="areas">Ver serviços</a>
+        </div>
+        <ul class="facts">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Seg a sex 8h–19h · sáb 8h–14h</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>(61) 9 9931-5616</li>
+        </ul>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 520 400">
+          <defs><clipPath id="hc"><rect x="20" y="40" width="480" height="340" rx="60"/></clipPath></defs>
+          <rect x="20" y="40" width="480" height="340" rx="60" fill="#0f56b3"/>
+          <g clip-path="url(#hc)">
+            <circle cx="470" cy="80" r="120" fill="#1b68cc"/>
+            <g fill="#2a78dc" transform="translate(60 70) rotate(-18) scale(2.600)"><use href="#i-paw" width="24" height="24"/></g>
+            <g fill="#2a78dc" transform="translate(400 250) rotate(14) scale(2)"><use href="#i-paw" width="24" height="24"/></g>
+            <path fill="#e9b572" d="M70 420c0-80 40-130 110-130s110 50 110 130z"/>
+            <path fill="#a9bbd4" d="M290 420c0-66 30-104 86-104s86 38 86 104z"/>
+            <path fill="#7fe0a8" d="M118 300c30 16 94 16 124 0v18c-30 16-94 16-124 0z"/>
+            <circle cx="180" cy="330" r="11" fill="#fff"/>
+          </g>
+          <use href="#dog" x="60" y="72" width="240" height="240"/>
+          <use href="#cat" x="282" y="150" width="188" height="188"/>
+          <g transform="translate(360 28)">
+            <rect width="150" height="64" rx="20" fill="#fff"/>
+            <rect width="150" height="64" rx="20" fill="none" stroke="#d6e1f0"/>
+            <circle cx="32" cy="32" r="17" fill="#0e7f43"/>
+            <path d="M24 32.500l5.500 5.500L41 26.500" fill="none" stroke="#fff" stroke-width="3.500" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="58" y="29" font-family="Figtree,Segoe UI,sans-serif" font-size="12" font-weight="600" fill="#4d5d78">Horário</text>
+            <text x="58" y="46" font-family="Figtree,Segoe UI,sans-serif" font-size="14" font-weight="700" fill="#0b2550">confirmado</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="wrap trio">
+      <a href="#inicio" data-scroll="areas"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-cross"/></svg></span><span><b>Serviços</b><span>Clínica veterinária e banho e tosa</span></span></a>
+      <a href="#inicio" data-scroll="produtos"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-bag"/></svg></span><span><b>Produtos</b><span>Ração, higiene, farmácia e acessórios</span></span></a>
+      <a class="go" href="#inicio" data-scroll="agendar"><span class="dot"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg></span><span><b>Agendamento</b><span>Monte o pedido e envie no WhatsApp</span></span></a>
+    </div>
+  </section>
+
+  <section class="block" id="areas">
+    <div class="wrap">
+      <div class="head"><div><h2>Dois cuidados, uma equipe só</h2><p class="sub">O pet toma banho e passa pelo veterinário no mesmo endereço, com o histórico dele sempre à mão.</p></div></div>
+      <div class="areas">
+        <article class="area bath">
+          <div>
+            <h3>Banho &amp; Tosa</h3>
+            <p>Banho completo, tosa e hidratação com produtos próprios para cada tipo de pelagem.</p>
+            <ul>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-drop"/></svg>Banho a partir de R$ 55</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-scissors"/></svg>Tosa higiênica e completa</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-brush"/></svg>Hidratação e desembolo</li>
+            </ul>
+          </div>
+          <svg class="area-art" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="104" r="92" fill="#fff"/><use href="#dog" x="18" y="22" width="164" height="164"/><circle cx="52" cy="36" r="16" fill="#cfe2fa"/><circle cx="78" cy="20" r="10" fill="#cfe2fa"/><circle cx="150" cy="30" r="13" fill="#cfe2fa"/></svg>
+          <div class="acts">
+            <a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar banho e tosa." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Agendar banho</a>
+            <a class="btn btn-line btn-sm" href="#banho-e-tosa">Ver preços e etapas<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+        <article class="area clinic">
+          <div>
+            <h3>Clínica Veterinária</h3>
+            <p>Consultas, vacinas, exames e cirurgias com atendimento sem pressa.</p>
+            <ul>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-cross"/></svg>Consulta a partir de R$ 150</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>Vacinas para cães e gatos</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-flask"/></svg>Exames e cirurgias</li>
+            </ul>
+          </div>
+          <svg class="area-art" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="104" r="92" fill="#16386f"/><use href="#cat" x="20" y="26" width="160" height="160"/><g transform="translate(138 18)"><rect width="46" height="46" rx="14" fill="#7fe0a8"/><path d="M23 12v22M12 23h22" stroke="#0b2550" stroke-width="6" stroke-linecap="round"/></g></svg>
+          <div class="acts">
+            <a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar uma consulta veterinária." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Agendar consulta</a>
+            <a class="btn btn-line btn-sm" href="#clinica-veterinaria">Ver serviços da clínica<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint" id="produtos">
+    <div class="wrap">
+      <div class="head">
+        <div><h2>Produtos da loja</h2><p class="sub">Peça pelo WhatsApp e retire na loja, ou receba em casa em Águas Claras e região.</p></div>
+        <div class="chips" role="group" aria-label="Filtrar produtos por categoria" id="chips"></div>
+      </div>
+      <div class="goods" id="goods"></div>
+      <p class="note">Preços e disponibilidade de exemplo. Confirme o estoque no WhatsApp.</p>
+    </div>
+  </section>
+
+  <section class="block" id="agendar">
+    <div class="wrap">
+      <div class="head"><div><h2>Agende em três toques</h2><p class="sub">Escolha o serviço e o melhor período. A mensagem sai pronta e a equipe responde com os horários livres.</p></div></div>
+      <div class="book">
+        <form class="form" id="bookForm" novalidate>
+          <div class="field">
+            <label for="bkService">Serviço</label>
+            <select id="bkService">
+              <optgroup label="Banho &amp; Tosa">
+                <option>Banho</option><option>Banho + tosa higiênica</option><option>Tosa completa</option><option>Banho + hidratação</option>
+              </optgroup>
+              <optgroup label="Clínica Veterinária">
+                <option>Consulta veterinária</option><option>Vacinação</option><option>Exames</option><option>Avaliação para castração</option>
+              </optgroup>
+            </select>
+          </div>
+          <fieldset class="field">
+            <legend>Seu pet é</legend>
+            <div class="seg">
+              <label><input type="radio" name="bkPet" id="bkPetDog" value="cão" checked><span>Cão</span></label>
+              <label><input type="radio" name="bkPet" id="bkPetCat" value="gato"><span>Gato</span></label>
+              <label><input type="radio" name="bkPet" id="bkPetOther" value="outro pet"><span>Outro</span></label>
+            </div>
+          </fieldset>
+          <div class="two">
+            <div class="field"><label for="bkName">Nome do pet (opcional)</label><input type="text" id="bkName" autocomplete="off" placeholder="Ex.: Thor" maxlength="30"></div>
+            <div class="field"><label for="bkDay">Quando</label>
+              <select id="bkDay"><option>hoje</option><option selected>amanhã</option><option>ainda nesta semana</option><option>na próxima semana</option><option>no sábado</option></select>
+            </div>
+          </div>
+          <fieldset class="field">
+            <legend>Período</legend>
+            <div class="seg">
+              <label><input type="radio" name="bkTime" id="bkTimeAm" value="de manhã" checked><span>Manhã</span></label>
+              <label><input type="radio" name="bkTime" id="bkTimePm" value="à tarde"><span>Tarde</span></label>
+              <label><input type="radio" name="bkTime" id="bkTimeAny" value="em qualquer horário"><span>Tanto faz</span></label>
+            </div>
+          </fieldset>
+        </form>
+        <aside class="phone" aria-label="Prévia da mensagem">
+          <div class="phone-top"><svg aria-hidden="true"><use href="#logo"/></svg><span>PetViva<small>(61) 9 9931-5616</small></span></div>
+          <p class="bubble" id="bkPreview" aria-live="polite">Olá, PetViva! Quero agendar um horário.</p>
+          <a class="btn btn-wa" id="bkSend" href="https://wa.me/5561999315616" target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Enviar pelo WhatsApp</a>
+          <p class="note">Abre o WhatsApp com a mensagem acima. Você confirma o envio lá.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint">
+    <div class="wrap">
+      <div class="head"><h2>Como funciona o atendimento</h2></div>
+      <ol class="steps">
+        <li><h3>Chame no WhatsApp</h3><p>Diga o serviço e o período que prefere.</p></li>
+        <li><h3>Receba os horários</h3><p>A equipe responde com as vagas e confirma a sua.</p></li>
+        <li><h3>Traga o pet</h3><p>Na chegada fazemos uma triagem rápida com você.</p></li>
+        <li><h3>Acompanhe pelo celular</h3><p>Avisamos por mensagem quando ele estiver pronto.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="contato">
+    <div class="wrap visit">
+      <div>
+        <h2>Onde estamos</h2>
+        <dl>
+          <div><dt><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg>Endereço</dt><dd>Av. das Araucárias, 1200, loja 4<br>Águas Claras, Brasília – DF</dd></div>
+          <div><dt><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>Horários</dt><dd><table class="hours"><tr><td>Segunda a sexta</td><td>8h às 19h</td></tr><tr><td>Sábado</td><td>8h às 14h</td></tr><tr><td>Domingo e feriados</td><td>Fechado</td></tr></table></dd></div>
+          <div><dt><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>WhatsApp</dt><dd><a href="https://wa.me/5561999315616" data-wa="Olá, PetViva!" target="_blank" rel="noopener">(61) 9 9931-5616</a></dd></div>
+        </dl>
+      </div>
+      <div class="map" role="img" aria-label="Mapa ilustrativo da localização da PetViva em Águas Claras">
+        <svg viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="600" height="360" fill="#e4effc"/>
+          <path d="M-20 250C120 210 220 300 380 240s200-40 260-70" fill="none" stroke="#fff" stroke-width="26"/>
+          <path d="M150-20c20 120-30 200 20 400M430-20c-30 140 30 240-10 400" fill="none" stroke="#fff" stroke-width="16"/>
+          <path d="M-20 90c160 30 420-20 640 20" fill="none" stroke="#fff" stroke-width="12"/>
+          <rect x="200" y="110" width="170" height="90" rx="18" fill="#cdebd9"/>
+          <rect x="470" y="230" width="110" height="100" rx="18" fill="#cdebd9"/>
+          <rect x="30" y="120" width="90" height="70" rx="12" fill="#d3e3f8"/>
+          <rect x="250" y="270" width="120" height="70" rx="12" fill="#d3e3f8"/>
+        </svg>
+        <span class="pin">PetViva</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint">
+    <div class="wrap">
+      <div class="head"><h2>Dúvidas rápidas</h2></div>
+      <div class="faq">
+        <details><summary>Preciso agendar ou posso chegar direto?</summary><p>Para banho, tosa e consultas de rotina pedimos agendamento, assim o seu pet não espera. A loja atende sem hora marcada.</p></details>
+        <details><summary>Vocês entregam os produtos?</summary><p>Sim, em Águas Claras e região. Combine a entrega pelo WhatsApp ou retire na loja no mesmo dia.</p></details>
+        <details><summary>Quais formas de pagamento são aceitas?</summary><p>Pix, cartão de débito e crédito e dinheiro. Para pacotes de banho, o pagamento pode ser parcelado.</p></details>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ BANHO & TOSA ============ -->
+<div data-page="banho-e-tosa" hidden>
+  <section class="sub-hero bath">
+    <div class="wrap sub-grid">
+      <div>
+        <a class="crumb" href="#inicio"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Início</a>
+        <h1>Banho &amp; Tosa com calma, carinho e horário marcado</h1>
+        <p class="lead" style="margin-top:16px">Cada pet é atendido por um profissional do início ao fim, com produtos escolhidos para a pelagem dele.</p>
+        <div class="cta-row">
+          <a class="btn btn-wa" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar banho e tosa." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Agendar banho e tosa</a>
+          <a class="btn btn-line" href="#banho-e-tosa" data-scroll="precos-banho">Ver preços</a>
+        </div>
+        <ul class="facts"><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Cães e gatos</li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Triagem antes de cada banho</li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Aviso por WhatsApp na saída</li></ul>
+      </div>
+      <div class="sub-art" aria-hidden="true">
+        <svg viewBox="0 0 400 320">
+          <circle cx="70" cy="70" r="34" fill="#fff"/><circle cx="330" cy="90" r="24" fill="#fff"/><circle cx="118" cy="30" r="16" fill="#fff"/><circle cx="300" cy="36" r="12" fill="#fff"/>
+          <use href="#dog" x="96" y="20" width="208" height="208"/>
+          <g fill="#fff"><circle cx="150" cy="52" r="26"/><circle cx="196" cy="36" r="30"/><circle cx="244" cy="52" r="24"/></g>
+          <path fill="#0f56b3" d="M40 196h320v40c0 44-36 76-80 76H120c-44 0-80-32-80-76z"/>
+          <rect x="26" y="182" width="348" height="30" rx="15" fill="#0b2550"/>
+          <g fill="#fff"><circle cx="110" cy="182" r="20"/><circle cx="146" cy="174" r="16"/><circle cx="270" cy="178" r="22"/><circle cx="304" cy="186" r="14"/></g>
+          <g fill="#2a78dc" transform="translate(170 228) scale(2.500)"><use href="#i-paw" width="24" height="24"/></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head"><div><h2>O que todo banho inclui</h2><p class="sub">As cinco etapas fazem parte de qualquer banho, do porte pequeno ao grande.</p></div></div>
+      <ul class="included">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-drop"/></svg><h3>Banho</h3><p>Água morna e shampoo para o tipo de pelo.</p></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-wind"/></svg><h3>Secagem</h3><p>Secador em temperatura confortável.</p></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-brush"/></svg><h3>Escovação</h3><p>Remove pelos soltos e desfaz nós leves.</p></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-ear"/></svg><h3>Limpeza de ouvidos</h3><p>Com solução própria e algodão.</p></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-scissors"/></svg><h3>Corte de unhas</h3><p>Aparadas e lixadas com segurança.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block tint" id="precos-banho">
+    <div class="wrap">
+      <div class="head"><div><h2>Preços por porte</h2><p class="sub">Valores a partir de. Pelagem longa ou com muitos nós pode ter ajuste, sempre combinado antes.</p></div></div>
+      <div class="table-box">
+        <table class="prices">
+          <thead><tr><th scope="col">Porte</th><th scope="col">Banho</th><th scope="col">Banho + tosa higiênica</th><th scope="col">Tosa completa</th><th scope="col"><span class="sr">Agendar</span></th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Pequeno<small>até 10 kg</small></th><td><b>R$ 55</b></td><td><b>R$ 75</b></td><td><b>R$ 110</b></td><td><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar banho e tosa para um pet de porte pequeno (até 10 kg)." target="_blank" rel="noopener">Agendar</a></td></tr>
+            <tr><th scope="row">Médio<small>de 10 a 25 kg</small></th><td><b>R$ 75</b></td><td><b>R$ 95</b></td><td><b>R$ 140</b></td><td><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar banho e tosa para um pet de porte médio (10 a 25 kg)." target="_blank" rel="noopener">Agendar</a></td></tr>
+            <tr><th scope="row">Grande<small>acima de 25 kg</small></th><td><b>R$ 100</b></td><td><b>R$ 125</b></td><td><b>R$ 180</b></td><td><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar banho e tosa para um pet de porte grande (acima de 25 kg)." target="_blank" rel="noopener">Agendar</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Gatos: banho a partir de R$ 80, com horários reservados em dias mais tranquilos. Valores de exemplo.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head"><div><h2>Cuidados adicionais</h2><p class="sub">Some ao banho no momento do agendamento.</p></div></div>
+      <div class="extras">
+        <article class="extra"><h3>Hidratação da pelagem</h3><p>Devolve maciez e brilho. Indicada para pelos longos, ressecados ou depois do verão.</p><p class="from">+ R$ 30</p></article>
+        <article class="extra"><h3>Desembolo</h3><p>Desfaz os nós com produto e paciência, sem puxar. Avaliamos o pelo antes de começar.</p><p class="from">a partir de + R$ 25</p></article>
+        <article class="extra"><h3>Escovação dos dentes</h3><p>Com pasta própria para pets. Ajuda no hálito entre uma limpeza veterinária e outra.</p><p class="from">+ R$ 15</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block tint">
+    <div class="wrap">
+      <div class="head"><div><h2>Para manter em casa</h2><p class="sub">Itens de higiene que a nossa equipe usa e recomenda.</p></div><a class="textlink" href="#inicio" data-view="inicio" data-scroll="produtos">Ver todos os produtos<svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+      <div class="goods" id="goodsBath"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head"><h2>Dúvidas sobre banho e tosa</h2></div>
+      <div class="faq">
+        <details><summary>Quanto tempo o pet fica com vocês?</summary><p>Em média de 1h30 a 2h30, conforme o porte e o serviço. Avisamos pelo WhatsApp assim que ele estiver pronto.</p></details>
+        <details><summary>Gatos podem tomar banho?</summary><p>Podem. Reservamos horários mais calmos para eles e o atendimento é feito em sala separada dos cães.</p></details>
+        <details><summary>Como funciona a triagem?</summary><p>Antes do banho olhamos pele, pelagem, ouvidos e unhas com você presente. Se algo chamar atenção, a clínica fica na porta ao lado.</p></details>
+        <details><summary>Não vou conseguir ir no horário. E agora?</summary><p>É só avisar pelo WhatsApp com antecedência que remarcamos sem custo.</p></details>
+      </div>
+      <div class="closing" style="margin-top:44px">
+        <div><h2>Pronto para o próximo banho?</h2><p>Envie o porte do pet e o melhor dia. A gente responde com os horários.</p></div>
+        <a class="btn" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar banho e tosa." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Agendar pelo WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ CLÍNICA ============ -->
+<div data-page="clinica-veterinaria" hidden>
+  <section class="sub-hero clinic">
+    <div class="wrap sub-grid">
+      <div>
+        <a class="crumb" href="#inicio"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>Início</a>
+        <h1>Tudo para manter a saúde do seu pet em dia</h1>
+        <p class="lead" style="margin-top:16px">Consultas, vacinas, exames e cirurgias com veterinários que explicam cada passo e acompanham o retorno.</p>
+        <div class="cta-row">
+          <a class="btn btn-wa" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar uma consulta veterinária." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Agendar consulta</a>
+          <a class="btn btn-line" href="#clinica-veterinaria" data-scroll="vacinas">Calendário de vacinas</a>
+        </div>
+        <ul class="facts"><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Cães e gatos</li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Retorno em até 15 dias sem custo</li><li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Carteirinha digital de vacinas</li></ul>
+      </div>
+      <div class="sub-art" aria-hidden="true">
+        <svg viewBox="0 0 400 320">
+          <rect x="40" y="30" width="320" height="270" rx="48" fill="#16386f"/>
+          <g fill="#1f4788" transform="translate(64 52) rotate(-14) scale(2.200)"><use href="#i-paw" width="24" height="24"/></g>
+          <path fill="#a9bbd4" d="M110 300c0-70 36-110 90-110s90 40 90 110z"/>
+          <use href="#cat" x="100" y="40" width="200" height="200"/>
+          <path d="M150 232c0 40 22 58 50 58s50-18 50-58" fill="none" stroke="#7fe0a8" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="200" cy="290" r="15" fill="#7fe0a8"/><circle cx="200" cy="290" r="6" fill="#0b2550"/>
+          <g transform="translate(286 46)"><rect width="74" height="74" rx="22" fill="#fff"/><path d="M37 20v34M20 37h34" stroke="#0e7f43" stroke-width="9" stroke-linecap="round"/></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="urgent" role="note">
+      <div><strong><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg>Urgência no horário de atendimento</strong><p>Dificuldade para respirar, convulsão, sangramento ou suspeita de envenenamento: avise que está a caminho e venha direto.</p></div>
+      <a class="btn btn-sm" href="https://wa.me/5561999315616" data-wa="URGÊNCIA: estou a caminho da PetViva com meu pet." target="_blank" rel="noopener">Avisar a clínica agora</a>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head"><div><h2>Serviços mais procurados</h2><p class="sub">Toque em agendar e a mensagem já sai com o serviço escolhido.</p></div></div>
+      <div class="svc">
+        <article><svg class="ico" aria-hidden="true"><use href="#i-cross"/></svg><h3>Consulta</h3><p>Avaliação completa, orientação de alimentação e plano de cuidados.</p><div class="foot"><span>R$ 150</span><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar uma consulta veterinária." target="_blank" rel="noopener">Agendar</a></div></article>
+        <article><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><h3>Vacinas</h3><p>Múltiplas, antirrábica, gripe e giárdia, com lembrete do reforço.</p><div class="foot"><span>a partir de R$ 90</span><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar a vacinação do meu pet." target="_blank" rel="noopener">Agendar</a></div></article>
+        <article><svg class="ico" aria-hidden="true"><use href="#i-flask"/></svg><h3>Exames</h3><p>Sangue, urina, fezes, ultrassom e raio-X com laudo no seu celular.</p><div class="foot"><span>sob consulta</span><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar exames para o meu pet." target="_blank" rel="noopener">Agendar</a></div></article>
+        <article><svg class="ico" aria-hidden="true"><use href="#i-scissors"/></svg><h3>Castração e cirurgias</h3><p>Avaliação pré-operatória, anestesia inalatória e acompanhamento na volta para casa.</p><div class="foot"><span>avaliação R$ 150</span><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar uma avaliação para castração." target="_blank" rel="noopener">Agendar</a></div></article>
+        <article><svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg><h3>Atestado para viagem</h3><p>Atestado de saúde para viagens de carro, ônibus ou avião dentro do país.</p><div class="foot"><span>R$ 120</span><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Preciso de um atestado de saúde para viagem." target="_blank" rel="noopener">Agendar</a></div></article>
+        <article><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg><h3>Microchip</h3><p>Identificação permanente do pet, aplicada em poucos minutos.</p><div class="foot"><span>R$ 130</span><a class="btn btn-wa btn-sm" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar a microchipagem do meu pet." target="_blank" rel="noopener">Agendar</a></div></article>
+      </div>
+      <p class="note">Valores de exemplo.</p>
+    </div>
+  </section>
+
+  <section class="block tint" id="vacinas">
+    <div class="wrap">
+      <div class="head"><div><h2>Calendário de vacinas</h2><p class="sub">Uma referência geral. O veterinário ajusta o protocolo à idade, à saúde e à rotina de cada pet.</p></div></div>
+      <div class="vax">
+        <article>
+          <h3><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#dog"/></svg>Cães</h3>
+          <ol>
+            <li><b>6 a 8 semanas</b><span>1ª dose da vacina múltipla (V8 ou V10)</span></li>
+            <li><b>A cada 3–4 sem.</b><span>Reforços da múltipla até cerca de 16 semanas</span></li>
+            <li><b>A partir de 12 sem.</b><span>Antirrábica</span></li>
+            <li><b>Todo ano</b><span>Reforço da múltipla e da antirrábica</span></li>
+          </ol>
+        </article>
+        <article>
+          <h3><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#cat"/></svg>Gatos</h3>
+          <ol>
+            <li><b>8 a 9 semanas</b><span>1ª dose da vacina múltipla (V3, V4 ou V5)</span></li>
+            <li><b>A cada 3–4 sem.</b><span>Reforços da múltipla até cerca de 16 semanas</span></li>
+            <li><b>A partir de 12 sem.</b><span>Antirrábica</span></li>
+            <li><b>Todo ano</b><span>Reforço da múltipla e da antirrábica</span></li>
+          </ol>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head"><h2>Dúvidas sobre a clínica</h2></div>
+      <div class="faq">
+        <details><summary>Quando levar o pet ao veterinário?</summary><p>Pelo menos uma vez por ano para check-up e vacinas. Filhotes e idosos precisam de visitas mais frequentes. Mudança de apetite, de comportamento ou vômitos repetidos pedem consulta.</p></details>
+        <details><summary>Preciso levar algo na primeira consulta?</summary><p>A carteirinha de vacinas e exames anteriores, se tiver. Para gatos, traga na caixa de transporte.</p></details>
+        <details><summary>Como recebo os resultados dos exames?</summary><p>O laudo chega pelo WhatsApp e o veterinário explica o resultado no retorno ou por mensagem.</p></details>
+      </div>
+      <div class="closing" style="margin-top:44px">
+        <div><h2>Check-up em dia, pet tranquilo</h2><p>Conte o que o seu pet precisa e receba os horários disponíveis.</p></div>
+        <a class="btn" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar uma consulta veterinária." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Agendar pelo WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="#inicio"><svg aria-hidden="true"><use href="#logo"/></svg><span><b>Pet<i>Viva</i></b></span></a>
+        <p style="margin-top:14px;max-width:34ch">Clínica veterinária, banho e tosa e pet shop em Águas Claras, Brasília – DF.</p>
+      </div>
+      <div><h3>Áreas</h3><ul><li><a href="#banho-e-tosa">Banho &amp; Tosa</a></li><li><a href="#clinica-veterinaria">Clínica Veterinária</a></li><li><a href="#inicio" data-view="inicio" data-scroll="produtos">Produtos</a></li></ul></div>
+      <div><h3>Atendimento</h3><ul><li><a href="https://wa.me/5561999315616" data-wa="Olá, PetViva!" target="_blank" rel="noopener">WhatsApp (61) 9 9931-5616</a></li><li>Seg a sex 8h–19h · sáb 8h–14h</li><li>Av. das Araucárias, 1200, loja 4</li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 PetViva. Site de demonstração: marca, endereço e valores são fictícios.</span><span>Responsável técnico: nome e CRMV-DF do veterinário</span></div>
+  </div>
+</footer>
+
+<div class="dock">
+  <p><b>Agende pelo WhatsApp</b>Resposta no horário de atendimento</p>
+  <a class="btn btn-wa" id="dockBtn" href="https://wa.me/5561999315616" data-wa="Olá, PetViva! Quero agendar um horário." target="_blank" rel="noopener"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg><span id="dockLabel">Agendar pelo WhatsApp</span></a>
+</div>
+
+<script>
+(function(){
+  var WA = "5561999315616";
+  function wa(msg){ return "https://wa.me/" + WA + "?text=" + encodeURIComponent(msg); }
+  function $(s,r){ return (r||document).querySelector(s); }
+  function $$(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+  function wire(root){ $$("[data-wa]",root).forEach(function(a){ a.href = wa(a.getAttribute("data-wa")); }); }
+
+  /* ---------- Produtos ---------- */
+  var cats = {racao:"Ração", higiene:"Higiene", farmacia:"Farmácia", acessorios:"Acessórios"};
+  var goods = [
+    {n:"Ração Premium Cães Adultos 15 kg", c:"racao", p:"189,90", s:"bag", k:"#0f56b3"},
+    {n:"Ração Gatos Castrados 10 kg", c:"racao", p:"164,90", s:"bag", k:"#0e7f43"},
+    {n:"Shampoo Neutro Pelos Claros 500 ml", c:"higiene", p:"34,90", s:"bottle", k:"#0f56b3"},
+    {n:"Antipulgas e Carrapatos 10 a 20 kg", c:"farmacia", p:"89,90", s:"box", k:"#0e7f43"},
+    {n:"Tapete Higiênico 30 unidades", c:"higiene", p:"59,90", s:"box", k:"#0f56b3"},
+    {n:"Mordedor de Nylon Médio", c:"acessorios", p:"29,90", s:"bone", k:"#e9b572"},
+    {n:"Condicionador Desembaraçante 500 ml", c:"higiene", p:"38,90", s:"bottle", k:"#0e7f43"},
+    {n:"Vermífugo Cães 4 comprimidos", c:"farmacia", p:"42,90", s:"box", k:"#0b2550"},
+    {n:"Comedouro Inox 900 ml", c:"acessorios", p:"39,90", s:"bowl", k:"#0f56b3"},
+    {n:"Sachê Gatos Adultos 85 g (cx. 12)", c:"racao", p:"41,90", s:"box", k:"#e9b572"},
+    {n:"Cama Redonda 60 cm", c:"acessorios", p:"99,90", s:"bed", k:"#0e7f43"},
+    {n:"Escova Dupla Face", c:"higiene", p:"27,90", s:"brush", k:"#0b2550"}
+  ];
+  var paw = '<g fill="#fff" transform="translate(TX TY) scale(SC)"><ellipse cx="6" cy="10" rx="2" ry="2.700"/><ellipse cx="10" cy="6" rx="2" ry="2.700"/><ellipse cx="14.500" cy="6" rx="2" ry="2.700"/><ellipse cx="18.500" cy="10" rx="2" ry="2.700"/><path d="M12.200 11.500c-3 0-5.700 3.300-5.700 5.800 0 1.700 1.300 2.700 2.800 2.700 1.200 0 1.900-.6 2.900-.6s1.700.6 2.900.6c1.500 0 2.800-1 2.800-2.700 0-2.500-2.700-5.800-5.700-5.800z"/></g>';
+  function pawAt(x,y,s){ return paw.replace("TX",x).replace("TY",y).replace("SC",s); }
+  function pic(s,k){
+    var b = "";
+    if(s==="bag") b = '<path fill="'+k+'" d="M34 22h52l6 86c.4 6-4 10-10 10H38c-6 0-10.400-4-10-10z"/><path fill="#0b2550" opacity=".18" d="M34 22h52l1.500 16h-55z"/><rect x="40" y="52" width="40" height="40" rx="10" fill="#fff" opacity=".18"/>'+pawAt(45,56,1.250);
+    if(s==="bottle") b = '<rect x="50" y="10" width="20" height="18" rx="4" fill="#0b2550"/><path fill="'+k+'" d="M42 34c0-5 4-8 9-8h18c5 0 9 3 9 8v74c0 6-4 10-10 10H52c-6 0-10-4-10-10z"/><rect x="48" y="56" width="24" height="36" rx="6" fill="#fff"/>'+pawAt(51,65,.75).replace('fill="#fff"','fill="'+k+'"');
+    if(s==="box") b = '<rect x="26" y="34" width="68" height="80" rx="8" fill="'+k+'"/><path fill="#0b2550" opacity=".18" d="M26 42c0-4.400 3.600-8 8-8h52c4.400 0 8 3.600 8 8v8H26z"/><rect x="36" y="62" width="48" height="36" rx="8" fill="#fff" opacity=".2"/>'+pawAt(45,65,1.250);
+    if(s==="bone") b = '<g transform="rotate(-28 60 64)"><rect x="30" y="54" width="60" height="20" rx="6" fill="'+k+'"/><circle cx="28" cy="52" r="13" fill="'+k+'"/><circle cx="28" cy="76" r="13" fill="'+k+'"/><circle cx="92" cy="52" r="13" fill="'+k+'"/><circle cx="92" cy="76" r="13" fill="'+k+'"/></g>';
+    if(s==="bowl") b = '<ellipse cx="60" cy="62" rx="40" ry="11" fill="#c98a4b"/><path fill="'+k+'" d="M16 66h88l-8 34c-1 5-5 8-10 8H34c-5 0-9-3-10-8z"/><ellipse cx="60" cy="66" rx="44" ry="10" fill="#0b2550" opacity=".2"/>'+pawAt(47,76,1.050);
+    if(s==="bed") b = '<ellipse cx="60" cy="80" rx="50" ry="28" fill="'+k+'"/><ellipse cx="60" cy="74" rx="36" ry="17" fill="#fff" opacity=".85"/><ellipse cx="60" cy="76" rx="36" ry="15" fill="#e4effc"/>';
+    if(s==="brush") b = '<g transform="rotate(-24 60 64)"><rect x="52" y="70" width="16" height="44" rx="8" fill="#c98a4b"/><rect x="26" y="22" width="68" height="52" rx="18" fill="'+k+'"/><g fill="#fff" opacity=".8"><circle cx="44" cy="40" r="3"/><circle cx="60" cy="40" r="3"/><circle cx="76" cy="40" r="3"/><circle cx="44" cy="56" r="3"/><circle cx="60" cy="56" r="3"/><circle cx="76" cy="56" r="3"/></g></g>';
+    return '<svg viewBox="0 0 120 128" aria-hidden="true">'+b+'</svg>';
+  }
+  function card(g){
+    return '<article class="good"><div class="pic">'+pic(g.s,g.k)+'</div><div class="info"><span class="cat">'+cats[g.c]+'</span><h3>'+g.n+'</h3><p class="price">R$ '+g.p+'</p>'+
+      '<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="https://wa.me/'+WA+'" data-wa="Olá, PetViva! Quero pedir: '+g.n+' (R$ '+g.p+'). Ainda tem em estoque?"><svg class="ico fill" aria-hidden="true"><use href="#i-wa"/></svg>Pedir</a></div></article>';
+  }
+  var grid = $("#goods"), chips = $("#chips"), current = "todos";
+  function drawGoods(){
+    var list = goods.filter(function(g){ return current==="todos" || g.c===current; });
+    grid.innerHTML = list.map(card).join(""); wire(grid);
+  }
+  chips.innerHTML = ['<button type="button" class="chip" data-c="todos" aria-pressed="true">Todos</button>'].concat(Object.keys(cats).map(function(c){
+    return '<button type="button" class="chip" data-c="'+c+'" aria-pressed="false">'+cats[c]+'</button>'; })).join("");
+  chips.addEventListener("click", function(e){
+    var b = e.target.closest(".chip"); if(!b) return;
+    current = b.getAttribute("data-c");
+    $$(".chip",chips).forEach(function(x){ x.setAttribute("aria-pressed", x===b ? "true":"false"); });
+    drawGoods();
+  });
+  drawGoods();
+  var gb = $("#goodsBath");
+  gb.innerHTML = goods.filter(function(g){ return g.c==="higiene"; }).map(card).join("");
+
+  /* ---------- Agendamento ---------- */
+  var form = $("#bookForm"), preview = $("#bkPreview"), send = $("#bkSend");
+  function buildMsg(){
+    var svc = $("#bkService").value;
+    var pet = (form.querySelector('input[name="bkPet"]:checked')||{}).value || "pet";
+    var time = (form.querySelector('input[name="bkTime"]:checked')||{}).value || "";
+    var name = $("#bkName").value.trim();
+    var day = $("#bkDay").value;
+    var who = name ? name + " (" + pet + ")" : (pet==="outro pet" ? "o meu pet" : "o meu " + pet);
+    var msg = "Olá, PetViva! Quero agendar:\n• Serviço: " + svc + "\n• Pet: " + who.replace(/^o meu /,"") + "\n• Preferência: " + day + ", " + time + "\nTem horário?";
+    preview.textContent = msg; send.href = wa(msg);
+  }
+  form.addEventListener("input", buildMsg); form.addEventListener("change", buildMsg);
+  form.addEventListener("submit", function(e){ e.preventDefault(); });
+  buildMsg();
+
+  /* ---------- Áreas (hash) ---------- */
+  var pages = {
+    "inicio": {t:"PetViva Clínica Veterinária e Pet Shop", l:"Agendar pelo WhatsApp", m:"Olá, PetViva! Quero agendar um horário."},
+    "banho-e-tosa": {t:"Banho e Tosa | PetViva", l:"Agendar banho e tosa", m:"Olá, PetViva! Quero agendar banho e tosa."},
+    "clinica-veterinaria": {t:"Clínica Veterinária | PetViva", l:"Agendar consulta", m:"Olá, PetViva! Quero agendar uma consulta veterinária."}
+  };
+  var pending = null, shown = null;
+  function show(){
+    var id = (location.hash||"").slice(1); if(!pages[id]) id = "inicio";
+    var changed = id !== shown; shown = id;
+    $$("[data-page]").forEach(function(p){ p.hidden = p.getAttribute("data-page") !== id; });
+    $$("[data-nav]").forEach(function(a){ if(a.getAttribute("data-nav")===id) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+    document.title = pages[id].t;
+    $("#dockLabel").textContent = pages[id].l;
+    var d = $("#dockBtn"); d.setAttribute("data-wa", pages[id].m); d.href = wa(pages[id].m);
+    if(pending){ var el = document.getElementById(pending); pending = null; if(el){ el.scrollIntoView(); return; } }
+    if(changed) window.scrollTo(0,0);
+  }
+  document.addEventListener("click", function(e){
+    var a = e.target.closest("a[data-scroll]"); if(!a) return;
+    e.preventDefault();
+    var target = a.getAttribute("data-scroll"), view = (a.getAttribute("href")||"#inicio").slice(1);
+    if(view !== shown){ pending = target; location.hash = view; }
+    else { var el = document.getElementById(target); if(el) el.scrollIntoView({behavior:"smooth"}); }
+  });
+  window.addEventListener("hashchange", show);
+  wire(document); show();
+})();
+</script>
+</body>
+</html>

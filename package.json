@@ -1,0 +1,10 @@
+{
+  "name": "demostracao-italosol",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "npx --yes serve public",
+    "deploy": "node scripts/build.mjs && npx --yes firebase-tools deploy --only hosting"
+  }
+}

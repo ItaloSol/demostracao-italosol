@@ -1,0 +1,14 @@
+# Dependências e resultados de build
+node_modules/
+/public/
+dist/
+dist-static/
+.firebase/
+*.log
+
+# Material de vendas e arquivos antigos: ficam só no computador
+materiais-comerciais/
+_to_delete/
+
+.DS_Store
+Thumbs.db

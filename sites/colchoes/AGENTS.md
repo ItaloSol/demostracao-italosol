@@ -1,0 +1,4 @@
+- Site estático: `npm run build` (vite.config.ts, prerender de `/`) gera `dist/client` e copia para `dist-static`, pasta publicada no Firebase Hosting e na Vercel.
+- Produtos, categorias e opções de filtro ficam só em `src/data/mattresses.ts`; a lógica de filtro, ordenação, busca e contagem é pura em `src/lib/catalog.ts`, então novos modelos não exigem mudanças na interface.
+- Dados da loja e mensagens de WhatsApp ficam em `src/config/store.ts`.
+- Identidade visual (cores em oklch, fontes Fraunces e Manrope auto-hospedadas) em `src/styles.css`. Verde é reservado às ações de WhatsApp; areia (`sand`) aos selos e à faixa de campanha.
